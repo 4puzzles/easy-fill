@@ -1,0 +1,20 @@
+.main {
+  margin: 10px 10px;
+  width: 250px;
+}
+
+#parse-result-div{
+    margin-top: 10px;
+}
+
+@keyframes progress-bar-run {
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 30%;
+  }
+  100% {
+    width: 100%;
+  }
+}
