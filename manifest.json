@@ -59,7 +59,7 @@
     
     "web_accessible_resources": ["js/inject.js"],
    
-    "homepage_url": "https://www.baidu.com",
+    "homepage_url": "https://github.com/Anonymous-GDBTU/easy-fill",
     
     "chrome_url_overrides":
     {
