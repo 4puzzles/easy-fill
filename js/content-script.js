@@ -60,7 +60,7 @@ function executeFillFormCMD(sheetJSON) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   // console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
   if (request.cmd == "TEST") {
-    executeTestCMD(request.msg, sendResponse);
+    executeTestEchoCMD(request.msg, sendResponse);
   } else if(request.cmd == 'FILL_FORM') {
     executeFillFormCMD(request.sheetJSON);
   }

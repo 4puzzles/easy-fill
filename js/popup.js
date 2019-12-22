@@ -14,9 +14,9 @@ function parseExcelFile() {
   `;
 
   // If no file is selected, return.
-  if (!$("#upload").val()) {
+  if (!$("#upload-input").val()) {
     $("#parse-result-div").append(parseResultMsg);
-    $("#parse-result-msg").text("No file is selected.");
+    $("#parse-result-msg").text(chrome.i18n.getMessage("errNoFileSeletedMsg"));
     return;
   }
 
@@ -36,7 +36,7 @@ function parseExcelFile() {
   $("#parse-result-div").append(progress);
   $("#progress-bar").css("animation", "progress-bar-run 1s ease forwards");
 
-  let files = $("#upload").prop("files");
+  let files = $("#upload-input").prop("files");
   let reader = new FileReader();
   reader.onload = function(e) {
     let rawData = e.target.result;
@@ -49,7 +49,7 @@ function parseExcelFile() {
     sleep(1000).then(function() {
       $("#progress-bar").addClass("bg-success");
       $("#parse-result-div").append(parseResultMsg);
-      $("#parse-result-msg").text("File is successfully parsed!");
+      $("#parse-result-msg").text(chrome.i18n.getMessage("succParseFinishedMsg"));
     });
     //$('#parse-result').append(parseResultMsg);
     //$('#parse-result-msg').text('File is successfully parsed!');
@@ -79,12 +79,17 @@ function fillForm() {
   sendMessageToContentScript(
     { cmd: "FILL_FORM", sheetJSON: sheetJSON },
     function(response) {
-      console.log("来自content的回复：" + response);
+      // console.log("来自content的回复：" + response);
     }
   );
 }
 
 $(function() {
+  // internationalize
+  $('#upload-label').text(chrome.i18n.getMessage("uploadLabel"));
+  $('#parse-btn').text(chrome.i18n.getMessage("parseBtn"));
+  $('#fill-btn').text(chrome.i18n.getMessage("fillBtn"));
+
   // set up parse button event
   $("#parse-btn").click(parseExcelFile);
 

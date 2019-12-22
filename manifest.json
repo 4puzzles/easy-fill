@@ -5,7 +5,7 @@
 
     "version": "0.8.0",
 
-    "description": "一个可以快速导入成绩的插件（工商专用）",
+    "description": "__MSG_pluginDesc__",
 
     "icons":
     {
@@ -23,7 +23,7 @@
     "browser_action": 
     {
         "default_icon": "img/icon.png",
-        "default_title": "一个可以快速导入成绩的插件（工商专用）",
+        "default_title": "__MSG_pluginDesc__",
         "default_popup": "popup.html"
     },
 
