@@ -16,4 +16,4 @@ Open the website page and upload the excel file. Parse the excel file.
 
 ### Step 3
 
-Click "fill" button. The extension will compare "学号" and "姓名". If one of them doesn't match the record, the scores won't be filled.
+Click "fill" button. The extension will compare "学号" and "姓名" with the record. If one of them doesn't match the record, the scores won't be filled.
