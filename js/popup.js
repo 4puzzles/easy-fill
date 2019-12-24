@@ -41,7 +41,7 @@ function parseExcelFile() {
   reader.onload = function(e) {
     let rawData = e.target.result;
     let wb = XLSX.read(rawData, {
-      type: "binary"
+      type: "array"
     });
 
     sheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
@@ -58,7 +58,7 @@ function parseExcelFile() {
     ); */
   };
 
-  reader.readAsBinaryString(files[0]);
+  reader.readAsArrayBuffer(files[0]);
 }
 
 function sendMessageToContentScript(message, callback) {
