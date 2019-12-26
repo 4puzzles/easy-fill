@@ -70,12 +70,6 @@ function sendMessageToContentScript(message, callback) {
 }
 
 function fillForm() {
-/*   sendMessageToContentScript(
-    { cmd: "TEST_ECHO", msg: "你好，我是popup！" },
-    function(response) {
-      // console.log("来自content的回复：<br>" + response);
-    }
-  ); */
   sendMessageToContentScript(
     { cmd: "FILL_FORM", sheetJSON: sheetJSON },
     function(response) {
