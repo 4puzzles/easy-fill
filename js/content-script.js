@@ -1,26 +1,16 @@
 /*
  *  Test communication between popup.js and contents-script.js.
  */
-function executeTestEchoCMD(msg, sendResponse) {
+/*
+function executeTestConnCMD(msg, sendResponse) {
   alert("Receive from popup.js: " + msg);
   sendResponse("我收到了你的消息！"); 
 }
-
-
-function executeTestExample(sheetJSON) {
-  $('input').each(function(){
-    for(let key in sheetJSON) {
-      if($(this).attr('id') == "input"+sheetJSON[key]["学号"]) {
-        $(this).val(sheetJSON[key]["成绩"]);
-        break;
-      }
-    }
-  }); 
-}
+*/
 
 
 /*
- *
+ *  
  */
 function executeFillFormCMD(sheetJSON) {
   let iframe = window.frames[0].document;
@@ -55,13 +45,15 @@ function executeFillFormCMD(sheetJSON) {
 
 
 /*
- *    Handle request from popup.js.
+ *    Handle requests from popup.js.
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  // console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
-  if (request.cmd == "TEST") {
-    executeTestEchoCMD(request.msg, sendResponse);
-  } else if(request.cmd == 'FILL_FORM') {
+  if(request.cmd == 'FILL_FORM') {
     executeFillFormCMD(request.sheetJSON);
   }
+  /*
+     else if(request.cmd == 'TEST_CONN') {
+       executeTestConnCMD(request.msg, sendResponse);
+     }
+  */
 });
