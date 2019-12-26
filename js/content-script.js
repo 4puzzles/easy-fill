@@ -43,10 +43,10 @@ function executeFillFormCMD(sheetJSON) {
         continue;
       
       $('#CHKPSCJ' + i, curtr).val(sheetJSON[key]['平时']);
-      $('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考']);
+      //$('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考']);
       $('#CHKQMCJ' + i, curtr).val(sheetJSON[key]['末考']);
-      $('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能']);
-      $('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合']);
+      //$('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能']);
+      //$('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合']);
 
       break;
     }
