@@ -1,6 +1,17 @@
 // global variables
 let sheetJSON; // a varaible stores the JSON data parsed by XLSX
 
+
+function showSelectedFileName() {
+  if ($("#upload-input").val()) {
+    let files = $("#upload-input").prop("files");
+    let fileName = files[0].name;
+    $('#upload-label').text(fileName);
+  } else {
+    $('#upload-label').text(chrome.i18n.getMessage("uploadLabel"));
+  }
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -97,6 +108,8 @@ $(function() {
   $('#upload-label').text(chrome.i18n.getMessage("uploadLabel"));
   $('#parse-btn').text(chrome.i18n.getMessage("parseBtn"));
   $('#fill-btn').text(chrome.i18n.getMessage("fillBtn"));
+
+  $('#upload-input').change(showSelectedFileName);
 
   // set up parse button event
   $("#parse-btn").click(parseExcelFile);
