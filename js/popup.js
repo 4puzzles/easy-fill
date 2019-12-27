@@ -87,7 +87,7 @@ function fillForm() {
   sendMessageToContentScript(
     { cmd: "FILL_FORM", sheetJSON: sheetJSON },
     function(response) {
-      // console.log("来自content的回复：" + response);
+      console.log(response);
     }
   );
 }
