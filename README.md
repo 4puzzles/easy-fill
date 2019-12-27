@@ -6,9 +6,9 @@ ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modif
 
 ### Step 1
 
-Prepare an excel file with formatted data. The first row **MUST** constain "学号", "姓名", "平时", "中考", "末考", "技能" and "综合". Here is an example.
+Prepare an excel file with formatted data. The first row **MUST** constain "学号", "姓名", "平时" and "末考". Here is an example.
 
-![Sample Picture](sample/sample.JPG)
+![Sample Picture](sample/sample.png)
 
 ### Step 2
 
