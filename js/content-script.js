@@ -48,12 +48,18 @@ function executeFillFormCMD(sheetJSON) {
  *    Handle requests from popup.js.
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if(request.cmd == 'FILL_FORM') {
-    executeFillFormCMD(request.sheetJSON);
-  }
-  /*
+  try {
+    if(request.cmd == 'FILL_FORM') {
+      executeFillFormCMD(request.sheetJSON);
+    }
+    /*
      else if(request.cmd == 'TEST_CONN') {
        executeTestConnCMD(request.msg, sendResponse);
      }
-  */
+    */
+  } catch (e) {
+    let errMsg = e.stack;
+    sendResponse(errMsg);
+  }
+
 });
