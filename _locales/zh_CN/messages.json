@@ -1,10 +1,11 @@
 {
-    "pluginDesc": {"message": "一个可以快速导入成绩的插件（工商专用）"},
+    "pluginDesc": { "message": "一个可以快速导入成绩的插件（工商专用）" },
     
     "uploadLabel": { "message": "选择文件"},
     "parseBtn": { "message": "解析文件" }, 
     "fillBtn": { "message": "填充" },
 
-    "errNoFileSeletedMsg": {"message": "尚未上传文件"},
-    "succParseFinishedMsg": {"message": "解析完成"}
+    "errNoFileSeletedMsg": { "message": "尚未上传文件" },
+    "errParseFailedMsg": { "message": "解析失败，格式不正确" },
+    "succParseFinishedMsg": { "message": "解析完成" }
 }

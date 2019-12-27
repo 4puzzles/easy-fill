@@ -38,19 +38,33 @@ function parseExcelFile() {
 
   let files = $("#upload-input").prop("files");
   let reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = async function(e) {
     let rawData = e.target.result;
-    let wb = XLSX.read(rawData, {
-      type: "array"
-    });
 
-    sheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    try {
+      let wb = XLSX.read(rawData, {
+        type: "array"
+      });
 
-    sleep(1000).then(function() {
-      $("#progress-bar").addClass("bg-success");
+      sheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    } catch (e) {
+      console.log(e);
+      
+      await sleep(1000);
+
+      $("#progress-bar").addClass("bg-danger");
       $("#parse-result-div").append(parseResultMsg);
-      $("#parse-result-msg").text(chrome.i18n.getMessage("succParseFinishedMsg"));
-    });
+      $("#parse-result-msg").text(chrome.i18n.getMessage("errParseFailedMsg"));
+      
+      return ;
+    }
+
+    await sleep(1000);
+
+    $("#progress-bar").addClass("bg-success");
+    $("#parse-result-div").append(parseResultMsg);
+    $("#parse-result-msg").text(chrome.i18n.getMessage("succParseFinishedMsg"));
+    
     //$('#parse-result').append(parseResultMsg);
     //$('#parse-result-msg').text('File is successfully parsed!');
     /* $("#parse-result").html(
