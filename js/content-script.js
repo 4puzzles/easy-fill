@@ -29,7 +29,7 @@ function executeFillFormCMD(sheetJSON) {
     let studentID = $("td", curtr).eq(1).text();
     let studentName = $("td", curtr).eq(2).text();
     for(let key in sheetJSON) {
-      if(studentID != sheetJSON[key]["学号"].trim() || studentName!= sheetJSON[key]["姓名"].trim()) 
+      if(studentID != sheetJSON[key]["学号"].toString().trim() || studentName!= sheetJSON[key]["姓名"].toString().trim()) 
         continue;
       
       $('#CHKPSCJ' + i, curtr).val(sheetJSON[key]['平时']);
@@ -61,5 +61,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     let errMsg = e.stack;
     sendResponse(errMsg);
   }
-
+  sendResponse('success');
 });
