@@ -26,17 +26,17 @@ function executeFillFormCMD(sheetJSON) {
       break;
     }
 
-    let studentID = $("td", curtr).eq(1).text();
-    let studentName = $("td", curtr).eq(2).text();
+    let studentID = $("td", curtr).eq(1).text().trim();
+    let studentName = $("td", curtr).eq(2).text().trim();
     for(let key in sheetJSON) {
       if(studentID != sheetJSON[key]["学号"].toString().trim() || studentName!= sheetJSON[key]["姓名"].toString().trim()) 
         continue;
       
-      $('#CHKPSCJ' + i, curtr).val(sheetJSON[key]['平时']);
-      //$('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考']);
-      $('#CHKQMCJ' + i, curtr).val(sheetJSON[key]['末考']);
-      //$('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能']);
-      //$('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合']);
+      $('#CHKPSCJ' + i, curtr).val(sheetJSON[key]['平时'].toString().trim());
+      //$('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考'].toString().trim());
+      $('#CHKQMCJ' + i, curtr).val(sheetJSON[key]['末考'].toString().trim());
+      //$('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能'].toString().trim());
+      //$('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合'].toString().trim());
 
       break;
     }
