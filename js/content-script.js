@@ -32,9 +32,11 @@ function executeFillFormCMD(sheetJSON) {
       if(studentID != sheetJSON[key]["学号"].toString().trim() || studentName!= sheetJSON[key]["姓名"].toString().trim()) 
         continue;
       
-      $('#CHKPSCJ' + i, curtr).val(sheetJSON[key]['平时'].toString().trim());
+      let score1  = sheetJSON[key]['平时'] ?  sheetJSON[key]['平时'].toString().trim() : '';
+      let score2 = sheetJSON[key]['末考'] ? sheetJSON[key]['末考'].toString().trim() : '';
+      $('#CHKPSCJ' + i, curtr).val(score1);
       //$('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考'].toString().trim());
-      $('#CHKQMCJ' + i, curtr).val(sheetJSON[key]['末考'].toString().trim());
+      $('#CHKQMCJ' + i, curtr).val(score2);
       //$('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能'].toString().trim());
       //$('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合'].toString().trim());
 
