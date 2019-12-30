@@ -29,7 +29,10 @@ function executeFillFormCMD(sheetJSON) {
     let studentID = $("td", curtr).eq(1).text().trim();
     let studentName = $("td", curtr).eq(2).text().trim();
     for(let key in sheetJSON) {
-      if(studentID != sheetJSON[key]["学号"].toString().trim() || studentName!= sheetJSON[key]["姓名"].toString().trim()) 
+      let sheetJSONStudentID = sheetJSON[key]["学号"] ? sheetJSON[key]["学号"].toString().trim() : '';
+      let sheetJSONStudentName = sheetJSON[key]["姓名"] ? sheetJSON[key]["姓名"].toString().trim() : '';
+      
+      if(studentID != sheetJSONStudentID || studentName!= sheetJSONStudentName) 
         continue;
       
       let score1  = sheetJSON[key]['平时'] ?  sheetJSON[key]['平时'].toString().trim() : '';
