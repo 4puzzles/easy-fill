@@ -4,10 +4,25 @@
 /*
 function executeTestConnCMD(msg, sendResponse) {
   alert("Receive from popup.js: " + msg);
-  sendResponse("我收到了你的消息！"); 
+  sendResponse("I got your message！"); 
 }
 */
 
+// str1, str2, cjfs, vOBJ
+function callGetBFselblur(elementID, row){
+  let iframe = window.frames[0].document;
+  let js = document.createElement('script');
+  js.setAttribute('type', 'text/javascript');
+  js.textContent = `
+    (function() {
+      let curInput = document.getElementById('${elementID}' + ${row});
+      getBFselblur('${row}', '1', '1', curInput);
+    })();
+  `;
+
+  iframe.head.appendChild(js);
+  js.remove();
+}
 
 /*
  *  
@@ -29,17 +44,31 @@ function executeFillFormCMD(sheetJSON) {
     let studentID = $("td", curtr).eq(1).text().trim();
     let studentName = $("td", curtr).eq(2).text().trim();
     for(let key in sheetJSON) {
+      if(!sheetJSON[key]["学号"] || !sheetJSON[key]["姓名"])
+        continue;
+
       let sheetJSONStudentID = sheetJSON[key]["学号"] ? sheetJSON[key]["学号"].toString().trim() : '';
       let sheetJSONStudentName = sheetJSON[key]["姓名"] ? sheetJSON[key]["姓名"].toString().trim() : '';
       
       if(studentID != sheetJSONStudentID || studentName!= sheetJSONStudentName) 
         continue;
       
-      let score1  = sheetJSON[key]['平时'] ?  sheetJSON[key]['平时'].toString().trim() : '';
-      let score2 = sheetJSON[key]['末考'] ? sheetJSON[key]['末考'].toString().trim() : '';
-      $('#CHKPSCJ' + i, curtr).val(score1);
+      //let score1  = sheetJSON[key]['平时'] ?  sheetJSON[key]['平时'].toString().trim() : '';
+      //let score2 = sheetJSON[key]['末考'] ? sheetJSON[key]['末考'].toString().trim() : '';
+      let score1 = parseFloat(sheetJSON[key]['平时']);
+      let score2 = parseFloat(sheetJSON[key]['末考']);
+
+      if(!isNaN(score1)) {  
+        $('#CHKPSCJ' + i, curtr).val(score1) ;
+        callGetBFselblur('CHKPSCJ', i);
+      }
+
+      if(!isNaN(score2)) {
+        $('#CHKQMCJ' + i, curtr).val(score2);
+        callGetBFselblur('CHKQMCJ', i);
+      }
+
       //$('#CHKQZCJ' + i, curtr).val(sheetJSON[key]['中考'].toString().trim());
-      $('#CHKQMCJ' + i, curtr).val(score2);
       //$('#CHKJNCJ' + i, curtr).val(sheetJSON[key]['技能'].toString().trim());
       //$('#CHKZHCJ' + i, curtr).val(sheetJSON[key]['综合'].toString().trim());
 
