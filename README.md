@@ -1,5 +1,5 @@
 # easy-fill
-ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modify any data or have any side effects. It just finds out the matched record and fills with ths scores. 
+ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modify any data or have any side effects. It just finds out the matched records and fills with the scores. 
 
 
 ## Usage
