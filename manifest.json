@@ -3,7 +3,7 @@
 
     "name": "Easy Fill",
 
-    "version": "0.9.2",
+    "version": "1.0.0",
 
     "description": "__MSG_pluginDesc__",
 
@@ -53,7 +53,7 @@
     
     "web_accessible_resources": ["js/inject.js"],
    
-    "homepage_url": "https://github.com/Anonymous-GDBTU/easy-fill",
+    "homepage_url": "https://github.com/4puzzles/easy-fill",
     
     "options_page": "options.html",
     
