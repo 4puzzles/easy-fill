@@ -1,55 +1,478 @@
-.main {
-  margin: 10px 10px;
-  width: 250px;
-}
-
-#upload-label {
-  display: block;
-
-  border: 1px solid #ced4da;
-  border-radius: .25rem;
-  padding: 6px 10px;
-
-  font-size: .875rem;
-
-  color: #495057;
-  background-color: #fff;
-  
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-
-  cursor: pointer;
-}
-
-#upload-label:hover {
-  border-color: #80bdff;
-
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-}
-
-#upload-input {
-  display: block;
-
-  position: absolute;
-  z-index: -1;
-  
-  width: 0;
-  height: 0;
-  
-  opacity: 0;
-}
-
-#parse-result-div{
-    margin-top: 10px;
-}
-
-@keyframes progress-bar-run {
-  0% {
-    width: 0;
+/* reset 
+   =============================================== */
+   html {
+    line-height: 1.15;
   }
-  30% {
-    width: 30%;
+  
+  body, p {
+    margin: 0;
   }
-  100% {
+  
+  button {
+    margin: 0;
+  
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+  }
+  
+  
+  body {
+    width: 200px;
+  
+    font-family: Roboto, sans-serif;
+  
+    color: #4f4f4f;
+  }
+  
+  /* button 
+     =============================================== */
+  .btn {
+    display: inline-block;
+    overflow: hidden;
+  
+    position: relative;
+  
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    padding: 0 16px;
     width: 100%;
+    height: 36px;
+  
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-decoration: none;
+    letter-spacing: .04em;  
+    text-transform: uppercase;
+  
+    color: inherit;
+    background: 0 0;
+  
+    outline: 0;
+    
+    transition: all .2s cubic-bezier(.4,0,.2,1),box-shadow .2s cubic-bezier(.4,0,1,1);
+  
+    cursor: pointer;
+    user-select: none;
+    will-change: box-shadow;
   }
-}
+  
+  .btn:hover {
+    background-color: rgba(0,0,0,.1);
+  }
+  
+  .btn-raised{
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+  
+  /* ripple 
+     =============================================== */
+  .ripple{
+    position: relative;
+  }
+  
+  .ripple-wave {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  
+    margin: 0;
+    border-radius: 50%;
+    padding: 0;
+  
+    font-size: 0;
+  
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    transition-duration: 1400ms;
+    transform: translate3d(0, 0, 0) scale(0);
+    
+    pointer-events: none;
+  }
+  
+  .ripple-wave-fill {
+    opacity: 0.35;
+  
+    transition-duration: 300ms;
+  }
+  
+  .ripple-wave-out {
+    opacity: 0;
+  
+    transition-duration: 600ms;
+  }
+  
+  /* dropdown 
+     =============================================== */
+  .dropdown {
+    overflow: hidden;
+  
+    width: 200px;
+  }
+  
+  .dropdown-item {
+    position: relative;
+  
+    margin: 10px 0;
+  }
+  
+  
+  /* file-upload 
+     =============================================== */
+  .file-upload {
+    position: relative;
+  
+    border-top: 1px dashed #d9d9d9;
+    border-bottom: 1px dashed #d9d9d9;
+    width: 100%;
+    height: 80px;
+  }
+  
+  .file-upload-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .file-upload-cloud-icon {
+    font-size: 1.5rem;
+  }
+  
+  /*.file-upload-default-message {}*/
+  
+  .file-upload-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-color: #000;
+    
+    opacity: 0;
+    
+    transition: all .2s;
+  
+    pointer-events: none;
+  }
+  
+  .file-upload:hover .file-upload-mask {
+    opacity: .1;
+  }
+  
+  .file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    
+    opacity: 0;
+    
+    cursor: pointer;
+  }
+  
+  .file-upload-previews {
+    display: flex;
+  
+    width: 100%;
+    height: 100%;
+  }
+  
+  .file-upload-preview {
+    flex-grow: 1;
+    flex-basis: 0;
+  
+    position: relative;
+    
+    background-color: #fff;
+  
+    cursor: pointer;
+  }
+  
+  .file-upload-render {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .file-upload-file-icon, .file-upload-extension {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  
+    transform: translate(-50%,-50%);
+  }
+  
+  .file-upload-file-icon {
+    font-size: 50px;
+    
+    color: #777;
+  }
+  
+  .file-upload-extension {
+    overflow: hidden;
+  
+    margin-top: 5px;
+  
+    width: 30px;
+  
+    font-size: 12px;
+    font-weight: 900;
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    
+    color: #fff;
+  }
+  
+  .file-upload-preview-details {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  
+    color: hsla(0,0%,100%,.959);
+    background-color: rgba(0,0,0,.7);
+  
+    opacity: 0;
+  
+    transition: all .2s;
+  }
+  
+  .file-upload:hover .file-upload-preview-details {
+    opacity: 1;
+  }
+  
+  .file-upload-remove-file-btn{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 3;
+  
+    border: 0;
+    border-radius: .25rem;
+    padding: 0 7px;
+    width: fit-content;
+    min-width: 0px;
+    height: 25px;
+  
+    font-size: .75rem;
+    line-height: 1.5;
+    text-align: center;
+    
+    color: #fff;
+    background-color: #f93154;
+    
+    /*box-shadow: 0 2px 5px 0 rgba(0,0,0,.2), 0 2px 10px 0 rgba(0,0,0,.1);*/
+  
+    cursor: pointer;
+  }
+  
+  
+  .file-uplod-preview-details-inner {
+    text-align: center;
+  }
+  
+  .file-upload-file-name {
+    padding: 0 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  
+  
+  /* fontawesome 
+     =============================================== */
+  @font-face{
+    font-family:"Font Awesome 5 Free";
+    font-style:normal;
+    font-weight:900;
+    font-display:block;
+    src: url(./fonts/fa-solid-900.woff2) format("woff2");
+  }
+  .fa,.far,.fas{
+    font-family:"Font Awesome 5 Free"
+  }
+  .fa,.fas{
+    font-weight:900
+  }
+  
+  .fas, .far{
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+  }
+  
+  .fa-plus:before{
+    content: "\f067";
+  }
+  
+  .fa-file:before {
+    content:"\f15b";
+  }
+  
+  @font-face{
+    font-family:"Font Awesome 5 Free";
+    font-style:normal;
+    font-weight:400;
+    font-display:block;
+    src: url(./fonts/fa-regular-400.woff2) format("woff2");
+  }
+  .fab,.far{
+    font-weight:400;
+  }
+  .fa-trash-alt:before {
+    content:"\f2ed";
+  }
+  
+  
+  
+  /* divider 
+     =============================================== */
+  .dropdown-divider {
+    height: 1px;
+    
+    background-color:rgba(0,0,0,.15);
+  }
+  
+  
+  
+  /* progress 
+     =============================================== */
+  .progress {
+    display: none;
+  
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+    
+    background-color: white;
+  }
+  
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+  
+    width: 100%;
+    height: 100%;
+  
+    background-color: #fff;
+  }
+  
+  .progress-message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    font-size: 14px;
+    text-align: center;
+    
+    color: inherit;
+  }
+  
+  .progress-bar {
+    display: block;
+    overflow: hidden;
+  
+    position: relative;
+  
+    border-radius: 2px;
+    width: 100%;
+    height: 4px;
+    
+    background-color: rgba(63,81,181,.2);
+  }
+  
+  .progress-bar-indeterminate {
+    background-color: green;
+  }
+  
+  .progress-bar-indeterminate::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  
+    background-color: inherit;
+    
+    animation: progress-indeterminate 2s linear infinite;
+  
+    content: ' ';
+    will-change: left, width;
+  }
+  
+  .progress-bar-indeterminate::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    
+    background-color: inherit;
+  
+    animation: progress-indeterminate-short 2s linear infinite;
+  
+    content: ' ';
+    will-change: left, width;
+  }
+  
+  @keyframes progress-indeterminate {
+    0% {
+      left: 0;
+      width: 0;
+    }
+    50% {
+      left: 30%;
+      width: 70%;
+    }
+    75% {
+      left: 100%;
+      width: 0;
+    }
+  }
+  
+  @keyframes progress-indeterminate-short {
+    0% {
+      left: 0;
+      width: 0;
+    }
+    50% {
+      left: 0;
+      width: 0;
+    }
+    75% {
+      left: 0;
+      width: 25%;
+    }
+    100% {
+      left: 100%;
+      width: 0;
+    }
+  }
