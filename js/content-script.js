@@ -85,15 +85,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   try {
     if(request.cmd == 'FILL_FORM') {
       executeFillFormCMD(request.sheetJSON);
+      sendResponse('fill done', 'INFO');
     }
-    /*
-     else if(request.cmd == 'TEST_CONN') {
-       executeTestConnCMD(request.msg, sendResponse);
-     }
-    */
   } catch (e) {
-    let errMsg = e.stack;
-    sendResponse(errMsg);
+    resp = {
+      status: 'error',
+      message: e.stack
+    }
+    //sendResponse(e.stack, 'FATAL');
+    sendResponse(resp);
   }
-  sendResponse('success');
+
+  return ;
 });
