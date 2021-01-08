@@ -81,20 +81,27 @@ function executeFillFormCMD(sheetJSON) {
 /*
  *    Handle requests from popup.js.
  */
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  try {
-    if(request.cmd == 'FILL_FORM') {
-      executeFillFormCMD(request.sheetJSON);
-      sendResponse('fill done', 'INFO');
+chrome.runtime.onMessage.addListener(
+  (request, sender, sendResponse) => {
+    try {
+      if(request.cmd == 'FILL_FORM') {
+        executeFillFormCMD(request.sheetJSON);
+        const resp = {
+          status: 'SUCCESS',
+          message: 'fill done'
+        }
+        sendResponse(resp);
+      }
+      
+    } catch (e) {
+      resp = {
+        status: 'ERROR',
+        message: e.stack
+      }
+      //sendResponse(e.stack, 'FATAL');
+      sendResponse(resp);
     }
-  } catch (e) {
-    resp = {
-      status: 'error',
-      message: e.stack
-    }
-    //sendResponse(e.stack, 'FATAL');
-    sendResponse(resp);
-  }
 
-  return ;
-});
+    return ;
+  }
+);
