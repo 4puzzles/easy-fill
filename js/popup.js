@@ -1,16 +1,16 @@
 function initUploadComponent() {
-  $("#fileUploadInput").change(function(event) {
-    let fileUploadInput = $(event.target);
+  $("#fileUploadInput").change((event) => {
+    const $fileUploadInput = $(event.target);
   
     // remove previews
-    let fileUploadPreviews = fileUploadInput.next('.file-upload-previews').first();
-    fileUploadPreviews.empty();
+    const $fileUploadPreviews = $fileUploadInput.next('.file-upload-previews').first();
+    $fileUploadPreviews.empty();
   
     // no file was chosen
-    if(fileUploadInput.val()=='')
+    if($fileUploadInput.val()=='')
       return ;
   
-      let fileUploadPreview = $(`
+    const $fileUploadPreview = $(`
       <div class="file-upload-preview">
         <div class="file-upload-render">
           <i class="fas fa-file file-upload-file-icon"></i>
@@ -31,7 +31,7 @@ function initUploadComponent() {
     `);
   
     let fileExt = '';
-    let file = fileUploadInput.prop('files')[0];
+    const file = $fileUploadInput.prop('files')[0];
     if(file.type === 'application/vnd.ms-excel') {
       fileExt = 'xls';
     } else if(file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
@@ -39,15 +39,15 @@ function initUploadComponent() {
     } else {
       fileExt = '?';
     }
-    fileUploadPreview.find('.file-upload-extension').first().text(fileExt);
-    fileUploadPreview.find('.file-upload-file-name').first().text(file.name);
+    $fileUploadPreview.find('.file-upload-extension').first().text(fileExt);
+    $fileUploadPreview.find('.file-upload-file-name').first().text(file.name);
   
-    fileUploadPreview.find('.file-upload-remove-file-btn').first().click(function(){
-      fileUploadInput.val('');
-      fileUploadPreview.remove();
+    $fileUploadPreview.find('.file-upload-remove-file-btn').first().click(function(){
+      $fileUploadInput.val('');
+      $fileUploadPreview.remove();
     });
   
-    fileUploadPreviews.append(fileUploadPreview);
+    $fileUploadPreviews.append($fileUploadPreview);
   });
 };
 
@@ -81,18 +81,18 @@ function show(event, $ripple) {
     `${-center.y + height / 2}px, 0) scale(1)`;
 
   // 涟漪的 DOM 结构，并缓存动画效果
-  let div = $(
+  let $div = $(
     `<div class="ripple-wave" ` +
       `style="width:${diameter}px;height:${diameter}px;` +
       `margin-top:-${diameter / 2}px;margin-left:-${diameter / 2}px;` +
       `left:${center.x}px;top:${center.y}px;"></div>`,
   )
-  div.data('_ripple_wave_translate', translate);
-  div.prependTo($ripple);
-  div.each(function() {
+  $div.data('_ripple_wave_translate', translate);
+  $div.prependTo($ripple);
+  $div.each(function() {
     return this.clientLeft;
   });
-  div.css('transform', translate);
+  $div.css('transform', translate);
 }
 
 function transitionEnd($el, callback) {
@@ -153,11 +153,6 @@ function hide(event) {
 
 
 function showRipple(event) {
-   // Chrome 59 点击滚动条时，会在 document 上触发事件
-  if (event.target === document) {
-    return;
-  }
-
   const $target = $(event.target);
 
   // 获取含 .ripple 类的元素
@@ -173,14 +168,6 @@ function showRipple(event) {
 
   $ripple.on('mousemove mouseup mouseleave', hide);
 }
-
-/* $(() => {
-  $(document).on('mousedown', showRipple);
-}); */
-
-
-
-
 
 
 
@@ -243,7 +230,7 @@ function fillForm(json) {
       }
 
       chrome.tabs.sendMessage(tabs[0].id, { cmd: "FILL_FORM", sheetJSON: json }, function(resp) {
-        if(resp.status==='successful') {
+        if(resp.status==='SUCCESS') {
           logger.log(resp.message, 'INFO');
           resolve();
         }
@@ -258,7 +245,7 @@ function fillForm(json) {
 
 
 function startProcessing() {
-  let progress = $(`
+  const $progress = $(`
     <div class="progress">
       <div class="progress-container">
         <div class="progress-message">
@@ -272,28 +259,28 @@ function startProcessing() {
   `);
 
   logger.log = function(msg, level) {
-    progress.find('.progress-message p').first().text(msg);
+    $progress.find('.progress-message p').first().text(msg);
   }
 
-  $("#startBtn").after(progress);
-  progress.fadeIn('slow');
+  $("#startBtn").after($progress);
+  $progress.fadeIn('slow');
 
   checkFile($("#fileUploadInput"))
     .then(parseExcelFile)
     .then(fillForm)
     .then(()=>{
       logger.log('DONE!', 'SUCCESS');
-      progress.find('.progress-message p').first().css('color', 'green');
-      progress.find('.progress-bar').first().fadeTo(200, '0');
+      $progress.find('.progress-message p').first().css('color', 'green');
+      $progress.find('.progress-bar').first().fadeTo(200, '0');
       setTimeout(() => {
-        progress.fadeOut('slow', function(){ progress.remove(); });
+        $progress.fadeOut('slow', function(){ $progress.remove(); });
       }, 5000);
     })
     .catch(()=>{
-      progress.find('.progress-message p').first().css('color', 'red');
-      progress.find('.progress-bar .progress-bar-indeterminate').first().css('background-color', 'red');
+      $progress.find('.progress-message p').first().css('color', 'red');
+      $progress.find('.progress-bar .progress-bar-indeterminate').first().css('background-color', 'red');
       setTimeout(() => {
-        progress.fadeOut('slow', function(){ progress.remove(); });
+        $progress.fadeOut('slow', function(){ $progress.remove(); });
       }, 5000);
     });  
 }
@@ -301,12 +288,9 @@ function startProcessing() {
 
 
 $(() => {
-  // ripple initialization
-  $(document).on('mousedown', showRipple);
-
-  // initialize upload component
   initUploadComponent();
 
-  // add click event to start button
+  $(document).on('mousedown', showRipple);
+
   $("#startBtn").click(startProcessing);
 });
