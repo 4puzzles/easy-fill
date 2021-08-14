@@ -1,8 +1,9 @@
+.vscode
+
 node_modules
 
-.eslintrc.json
+dist/easy-fill/build
 
-package-lock.json
-package.json
+dist/easy-fill/options.html
 
-data
+dist/easy-fill/popup.html

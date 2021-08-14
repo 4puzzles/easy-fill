@@ -3,7 +3,7 @@
 
     "name": "Easy Fill",
 
-    "version": "1.1.0",
+    "version": "2.0.0",
 
     "description": "__MSG_pluginDesc__",
 
@@ -25,17 +25,8 @@
     [
         {
             "matches": ["<all_urls>"],
-
-            "js": [ "js/jquery-3.4.1.min.js", "js/content-script.js"],
-
-            "css": ["css/custom.css"],
- 
+            "js": [ "build/content-script.bundle.js" ],
             "run_at": "document_idle"
-        },
-
-        {
-            "matches": ["*://*/*.png", "*://*/*.jpg", "*://*/*.gif", "*://*/*.bmp"],
-            "js": ["js/show-image-content-size.js"]
         }
     ],
 
@@ -51,7 +42,7 @@
         "https://*/*" 
     ],
     
-    "web_accessible_resources": ["js/inject.js"],
+    "web_accessible_resources": ["build/inject.js"],
    
     "homepage_url": "https://github.com/4puzzles/easy-fill",
     

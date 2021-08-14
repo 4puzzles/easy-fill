@@ -1,3 +1,4 @@
+import $ from "jquery";
 /*
  *  Test communication between popup.js and contents-script.js.
  */
