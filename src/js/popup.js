@@ -1,3 +1,8 @@
+import '@/css/popup.css';
+
+import XLSX from 'xlsx';
+import $ from 'jquery';
+
 function initUploadComponent() {
   $("#fileUploadInput").change((event) => {
     const $fileUploadInput = $(event.target);
