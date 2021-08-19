@@ -1,13 +1,13 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+
 
 const src = __dirname + '/src';
 
 module.exports = {
   entry: {
-    popup: src + "/js/popup.js",
-    "content-script": src + "/js/content-script.js", 
-    inject: src + "/js/inject.js", 
+    "content-script": src + "/content-script.js", 
+    inject: src + "/inject.js", 
   },
 
   output: {
@@ -16,25 +16,7 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Popup',
-      template: src + '/views/popup.html',
-      filename: __dirname + '/dist/easy-fill/popup.html',
-      inject: 'head',
-      minify: {
-        removeComments: true,
-      },
-    }),
-    
-    new HtmlWebpackPlugin({
-      title: 'Options',
-      template: src + '/views/options.html',
-      filename: __dirname + '/dist/easy-fill/options.html',
-      inject: 'head',
-      minify: {
-        removeComments: true,
-      },
-    }),
+    new VueLoaderPlugin(),
   ],
 
   module: {
@@ -42,6 +24,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
     ],
   },
