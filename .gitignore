@@ -3,7 +3,3 @@
 node_modules
 
 dist/easy-fill/build
-
-dist/easy-fill/options.html
-
-dist/easy-fill/popup.html

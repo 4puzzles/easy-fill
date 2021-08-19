@@ -1,59 +1,49 @@
 {
-    "manifest_version": 2,
+  "manifest_version": 3,
 
-    "name": "Easy Fill",
+  "name": "Easy Fill",
 
-    "version": "2.0.0",
+  "version": "2.0.0",
+  
+  "action": {
+    "default_icon": "img/icon.png",
+    "default_title": "__MSG_pluginDesc__"
+  },
 
-    "description": "__MSG_pluginDesc__",
+  "default_locale": "zh_CN",
 
-    "icons":
+  "description": "__MSG_pluginDesc__",
+
+  "icons": {
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  },
+
+  "content_scripts": [
     {
-        "16": "img/icon.png",
-        "48": "img/icon.png",
-        "128": "img/icon.png"
-    },
+      "matches": [ 
+        "http://218.15.245.162:9086/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.81/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.82/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.83/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*"
+      ],
+      "js": [ "build/content-script.bundle.js" ],
+      "run_at": "document_idle"
+    }
+  ],
 
-    "browser_action": 
+  "homepage_url": "https://github.com/4puzzles/easy-fill",
+  
+  "web_accessible_resources": [
     {
-        "default_icon": "img/icon.png",
-        "default_title": "__MSG_pluginDesc__",
-        "default_popup": "popup.html"
-    },
-
-    "content_scripts": 
-    [
-        {
-            "matches": ["<all_urls>"],
-            "js": [ "build/content-script.bundle.js" ],
-            "run_at": "document_idle"
-        }
-    ],
-
-    "permissions":
-    [
-        "contextMenus", 
-        "tabs", 
-        "notifications", 
-        "webRequest", 
-        "webRequestBlocking",
-        "storage", 
-        "http://*/*", 
-        "https://*/*" 
-    ],
-    
-    "web_accessible_resources": ["build/inject.js"],
-   
-    "homepage_url": "https://github.com/4puzzles/easy-fill",
-    
-    "options_page": "options.html",
-    
-    "options_ui":
-    {
-        "page": "options.html",
-        
-        "chrome_style": true
-    },
-    
-    "default_locale": "zh_CN"
+      "resources": [ "build/inject.bundle.js" ],
+      "matches": [ 
+        "http://218.15.245.162:9086/*",
+        "http://172.18.100.81/*",
+        "http://172.18.100.82/*",
+        "http://172.18.100.83/*"
+      ]
+    }
+  ]
 }

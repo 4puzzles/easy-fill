@@ -1,12 +1,3 @@
 {
-    "pluginDesc": { "message": "A chrome extension for fast data entry (GDBTU only)" },
-
-    "uploadLabel": { "message": "Choose File" },
-    "parseBtn": { "message": "Parse" }, 
-    "fillBtn": { "message": "Fill" },
-
-
-    "errNoFileSeletedMsg": { "message": "No file is selected" },
-    "errParseFailedMsg": { "message": "Fail to parse the file" },
-    "succParseFinishedMsg": { "message": "Done" }
+    "pluginDesc": { "message": "A chrome extension for fast data entry (GDBTU only)" }
 }
