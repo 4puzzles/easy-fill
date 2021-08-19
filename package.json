@@ -1,10 +1,10 @@
 {
   "name": "easy-fill",
-  "version": "1.0.0",
-  "description": "ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modify any data or have any side effects. It just finds out the matched records and fills with the scores.",
-  "main": "index.js",
+  "version": "2.0.0-alpha",
+  "description": "Ease Fill is a chrome extension for fast data entry (GDBTU only). It won't modify any data or have any side effects. It just finds out the matched records and fills with the scores.",
+  "private": true,
   "scripts": {
-    "dev": "node_modules/.bin/webpack --mode development --config webpack.dev.js",
+    "dev": "node_modules/.bin/webpack --mode development --config webpack.config.js",
     "build": "node_modules/.bin/webpack --mode production --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,14 +20,16 @@
   },
   "homepage": "https://github.com/4puzzles/easy-fill#readme",
   "devDependencies": {
+    "@vue/compiler-sfc": "^3.2.2",
     "css-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.2",
     "style-loader": "^3.2.1",
+    "vue-loader": "^16.5.0",
     "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "jquery": "^3.6.0",
+    "ant-design-vue": "^2.2.6",
+    "vue": "^3.1.0",
     "xlsx": "^0.17.0"
   }
 }
