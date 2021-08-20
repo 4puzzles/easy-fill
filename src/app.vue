@@ -84,14 +84,15 @@ export default defineComponent({
         // get target document object
         const doc = window.frames[0].document;
 
-        // if deadline is exceeded, the document will have two table tags
-        // the first table is about the deadline information
-        if(doc.querySelectorAll('table').length > 1) {
-          reject(new Error('Deadline exceeded'));
+        // TODO: check deadline
+        // the first table tag is about deadline information
+
+        // select the second table tag
+        const table = doc.querySelector('table:last-child');
+        if(table === null) {
+          reject(new Error('Target table not found'));
           return ;
         }
-
-        const table = doc.querySelector('table');
 
         let count = 0;
         for(let i=1; ;i++) {
