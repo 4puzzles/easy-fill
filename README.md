@@ -1,5 +1,7 @@
-# easy-fill
-ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modify any data or have any side effects. It just finds out the matched records and fills with the scores. 
+# Easy Fill
+
+Ease Fill is a chrome extension for fast data entry (GDBTU only). 
+It fills out the web page form with the scores according to the matched records in the excel file. 
 
 
 ## Usage
@@ -8,12 +10,14 @@ ease-fill is a chrome extension for fast data entry (GDBTU only). It won't modif
 
 Prepare an excel file with formatted data. The first row **MUST** constain "学号", "姓名", "平时" and "末考". Here is an example.
 
-![Sample Picture](sample/sample.png)
+![Example](doc/example.png "Example")
 
 ### Step 2
 
-Open the website page and upload the excel file. Parse the excel file.
+Open the web page and click the smiley button at the top-right corner. Upload the excel file.
 
-### Step 3
+![Smiley Button](doc/smiley-button.png "Smiley Button")
 
-Click "fill" button. The extension will compare "学号" and "姓名" with the record. If one of them doesn't match the record, the scores won't be filled.
+A tip will show at the top when the process is done.
+
+![Tip](doc/tip.png "Tip")

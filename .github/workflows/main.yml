@@ -1,0 +1,49 @@
+name: Publish Easy Fill
+on:
+  push:
+    tags: 
+      - 'v[0-9].[0-9]+.[0-9]+'
+      - 'v[0-9].[0-9]+.[0-9]+-*'  # v1.0.0-alpha, v1.0.0-beta.1
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Setup Node
+      uses: actions/setup-node@master
+      with:
+        node-version: 16
+
+    - name: Build
+      run: |
+        npm install 
+        npm run build 
+        cd dist && zip -r release.zip easy-fill
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: ${{ contains(github.ref, '-') }}
+
+    - name: Set Version
+      run: |
+        VERSION=${{ github.ref_name }}
+        echo "VERSION=${VERSION:1}" >> $GITHUB_ENV
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/release.zip
+        asset_name: easy-fill-${{ env.VERSION }}.zip
+        asset_content_type: application/zip
