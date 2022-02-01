@@ -120,6 +120,8 @@ export default defineComponent({
 
             const score1 = parseFloat(sheetJSON[key]['平时']);
             const score2 = parseFloat(sheetJSON[key]['末考']);
+            const score3 = parseFloat(sheetJSON[key]['实验']);
+
 
             let affected = false;
             if(!isNaN(score1)) {
@@ -131,6 +133,12 @@ export default defineComponent({
             if(!isNaN(score2)) {
               curtr.querySelector('#CHKQMCJ'+i).value = score2;
               callGetBFselblur('CHKQMCJ', i);
+              affected = true;
+            }
+
+            if(!isNaN(score3)) {
+              curtr.querySelector('#CHKJNCJ'+i).value = score3;
+              callGetBFselblur('CHKJNCJ', i);
               affected = true;
             }
 
