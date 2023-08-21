@@ -1,5 +1,14 @@
-.vscode
+# Windows
+Thumbs.db
 
-node_modules
+# macOS
+.DS_Store
 
-dist/easy-fill/build
+# VSCode Settings
+.vscode/
+
+# Node Packages
+/node_modules/
+
+# Build
+/dist/easy-fill/build/
