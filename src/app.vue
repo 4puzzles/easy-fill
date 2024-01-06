@@ -17,7 +17,7 @@
 import { defineComponent, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue';
-import XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 export default defineComponent({
   name: "easy-fill-button",
