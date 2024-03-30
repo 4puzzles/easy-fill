@@ -1,8 +1,10 @@
+// default path to the custom script
+const defaultScriptPath = 'build/inject.bundle.js';
+
 // inject custom script
 (function(scriptPath) {
-  const defaultScriptPath = 'build/inject.bundle.js'
-
-	scriptPath = scriptPath || defaultScriptPath;
+  // log
+  console.info("%c[Easy Fill]: path '" + location.pathname + "' detected", 'color: green;');
 
 	let script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
@@ -25,4 +27,4 @@
 	};
 
 	document.head.appendChild(script);
-})();
+})(defaultScriptPath);

@@ -17,7 +17,7 @@
 import { defineComponent, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue';
-import XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 export default defineComponent({
   name: "easy-fill-button",
@@ -76,7 +76,7 @@ export default defineComponent({
       // when the user inputs a score, the function will be called
       // and the final score will be calculated
       // here we just simulate the same situation
-      targetWindow.getBFselblur(row, 1, 1, curInput);
+      targetWindow.getBFselblur(String(row), '1', '1', curInput);
     }
 
     const processSheetJSON = (sheetJSON) => {
