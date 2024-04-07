@@ -1,5 +1,5 @@
 <template>
-  <div class="top-right">
+  <div style="position: absolute;" :style="pos">
     <SmileOutlined class="icon" v-show="state==='ready'" :style="{ color: '#08c' }"/>
     <LoadingOutlined class="icon" v-show="state==='loading'" :style="{ color: '#08c' }"/>
     <FrownOutlined class="icon" v-show="state==='error'" :style="{ color: '#ff4d4f' }"/>
@@ -19,6 +19,9 @@ import { message } from 'ant-design-vue';
 import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue';
 import * as XLSX from 'xlsx';
 
+import config from './config.js';
+import console from './console.js';
+
 export default defineComponent({
   name: "easy-fill-button",
 
@@ -34,10 +37,12 @@ export default defineComponent({
 
     const checkFile = (fileUploadInput) => {
       return new Promise((resolve, reject) => {
+        console.info('start to check file ...');
         if (fileUploadInput.value === '') {
-          reject(new Error('No file is selected'));
+          reject(new Error('no file is selected'));
           return;
         }
+        console.info('file checked');
         resolve(fileUploadInput.files[0]);
       });
     }
@@ -54,16 +59,16 @@ export default defineComponent({
             });
 
             const sheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-            //console.log(sheetJSON);
+            console.info('excel file parsed: %o', sheetJSON);
             resolve(sheetJSON);
           } catch (e) {
-            console.error(e);
-            reject(new Error('Fail to parse the file'));
+            reject(e);
           }
 
           return ;
         };
 
+        console.info('start to parse excel file ...');
         reader.readAsArrayBuffer(file);
       });
     }
@@ -79,6 +84,7 @@ export default defineComponent({
       targetWindow.getBFselblur(String(row), '1', '1', curInput);
     }
 
+    /*
     const processSheetJSON = (sheetJSON) => {
       return new Promise((resolve, reject) => {
         // get target document object
@@ -145,21 +151,53 @@ export default defineComponent({
         resolve(count + ' rows affected');
       });
     }
+    */
+    const processSheetJSON = (sheetJSON) => {
+      return new Promise((resolve, reject) => {
+        console.info('start to process the sheet data ...')
+        let count = 0;
+        for(const row of currentConfig.rows()) {
+          for(const i in sheetJSON) {
+            if(row.tryFillRowData(sheetJSON[i])) {
+              ++count;
+              break;
+            }
+          }
+        }
 
+        console.info('the sheet data processed');
+        resolve(count);
+      });
+    }
+
+    const currentConfig = config.find(({ path }) => path === location.pathname);
     const handleChange = (event) => {
       state.value = 'loading';
+
+      console.info('start to initialize ...');
+      try {
+        currentConfig.init();
+      } catch(err) {
+        console.error(`${err.message}\ntargetDoc: %o\ntargetTable: %o`, err.cause.targetDoc, err.cause.targetTable);
+        message.error('找不到目标填充区域。您是否忘记检索课程了？');
+        state.value = 'error';
+        input.value.value = '';
+        return ;
+      }
+      console.info('initialize successfully');
+
       checkFile(event.target)
         .then(parseExcelFile)
         .then(processSheetJSON)
-        .then(msg=>{
+        .then(count => {
           state.value = 'ready';
-          console.log('easy-fill: ' + msg);
-          message.success(msg);
+          console.info(`${count} ${count===1?'row':'rows'} affected`);
+          message.success(`已修改${count}行。`);
         })
         .catch(err => {
           state.value = 'error';
-          console.error(err);
-          message.error(err.message);
+          console.error('%o', err);
+          message.error(`填充失败，请检查Excel文件格式及内容是否正确。`);
         })
         .finally(()=>{
           // reset file upload input
@@ -172,18 +210,13 @@ export default defineComponent({
       state,
       input,
       handleChange,
+      pos: currentConfig.pos,
     };
   },
 })
 </script>
 
 <style scoped>
-.top-right {
-  position: absolute;
-  top: 40px;
-  right: 300px;
-}
-
 .icon {
   font-size: 20px;
 }
@@ -203,10 +236,4 @@ export default defineComponent({
 
   cursor: pointer;
 }
-
-/*
-.file-upload-input::-webkit-file-upload-button {
-  cursor:pointer;
-}
-*/
 </style>

@@ -4,7 +4,7 @@ const defaultScriptPath = 'build/inject.bundle.js';
 // inject custom script
 (function(scriptPath) {
   // log
-  console.info("%c[Easy Fill]: path '" + location.pathname + "' detected", 'color: green;');
+  console.info(`%c[Easy Fill]: path '${location.pathname}' detected`, 'color: green;');
 
 	let script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
