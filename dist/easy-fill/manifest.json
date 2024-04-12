@@ -5,7 +5,7 @@
 
   "version": "2.0.0",
 
-  "version_name": "2.0.0-alpha.2",
+  "version_name": "2.0.0-alpha.3",
   
   "action": {
     "default_icon": "img/icon.png",
@@ -25,10 +25,10 @@
   "content_scripts": [
     {
       "matches": [ 
-        "http://218.15.245.162:9086/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
-        "http://172.18.100.81/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
-        "http://172.18.100.82/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*",
-        "http://172.18.100.83/jwweb/XSCJ/Tea_KCCJLR_add_temp.aspx*"
+        "http://218.15.245.162:9086/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.81/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.82/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://172.18.100.83/XSCJ/Tea_KCCJLR_add_temp.aspx*"
       ],
       "js": [ "build/content-script.bundle.js" ],
       "run_at": "document_idle"
