@@ -4,13 +4,10 @@ import { createApp } from 'vue';
 import 'ant-design-vue/dist/antd.css';
 
 import App from './app.vue';
+import config from './config.js';
 
-
-const el = document.createElement('div');
-el.id = 'easy-fill-ext';
-document.body.appendChild(el);
-
+const currentConfig = config.find(({ path }) => path === location.pathname);
+const el = currentConfig.inject('easy-fill-ext');
 
 const app = createApp(App);
-
-app.mount('#easy-fill-ext');
+app.mount(el);
