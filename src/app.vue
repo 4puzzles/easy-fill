@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absolute;" :style="pos">
+  <div :style="style">
     <SmileOutlined class="icon" v-show="state==='ready'" :style="{ color: '#08c' }"/>
     <LoadingOutlined class="icon" v-show="state==='loading'" :style="{ color: '#08c' }"/>
     <FrownOutlined class="icon" v-show="state==='error'" :style="{ color: '#ff4d4f' }"/>
@@ -210,7 +210,7 @@ export default defineComponent({
       state,
       input,
       handleChange,
-      pos: currentConfig.pos,
+      style: currentConfig.style,
     };
   },
 })
