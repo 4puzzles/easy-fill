@@ -8,7 +8,12 @@
   "version_name": "2.0.0-alpha.3",
   
   "action": {
-    "default_icon": "img/icon.png",
+    "default_icon": {
+      "16": "img/icon.png",
+      "32": "img/icon.png",
+      "48": "img/icon.png",
+      "128": "img/icon.png"
+    },
     "default_title": "__MSG_pluginDesc__"
   },
 
@@ -18,6 +23,7 @@
 
   "icons": {
     "16": "img/icon.png",
+    "32": "img/icon.png",
     "48": "img/icon.png",
     "128": "img/icon.png"
   },
@@ -30,7 +36,8 @@
         "http://172.18.100.82/XSCJ/Tea_KCCJLR_add_temp.aspx*",
         "http://172.18.100.83/XSCJ/Tea_KCCJLR_add_temp.aspx*"
       ],
-      "js": [ "build/content-script.bundle.js" ],
+      "js": [ "js/content-script.js" ],
+      "css": ["css/inject.css"],
       "run_at": "document_idle"
     }
   ],
@@ -39,7 +46,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": [ "build/inject.bundle.js" ],
+      "resources": [ "js/inject.js" ],
       "matches": [ 
         "http://218.15.245.162:9086/*",
         "http://172.18.100.81/*",

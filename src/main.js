@@ -1,5 +1,5 @@
 // default path to the custom script
-const defaultScriptPath = 'build/inject.bundle.js';
+const defaultScriptPath = 'js/inject.js';
 
 // inject custom script
 (function(scriptPath) {
@@ -7,7 +7,7 @@ const defaultScriptPath = 'build/inject.bundle.js';
   console.info("%c[Easy Fill]: path '" + location.pathname + "' detected", 'color: green;');
 
 	let script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
+	script.setAttribute('type', 'module');
 
   // cannot use relative path directly like script.src = 'inject.bundle.js'
   // because it violates the following Content Security Policy directive: "script-src 'self'"
