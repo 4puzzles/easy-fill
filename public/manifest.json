@@ -34,10 +34,15 @@
         "http://218.15.245.162:9086/XSCJ/Tea_KCCJLR_add_temp.aspx*",
         "http://172.18.100.81/XSCJ/Tea_KCCJLR_add_temp.aspx*",
         "http://172.18.100.82/XSCJ/Tea_KCCJLR_add_temp.aspx*",
-        "http://172.18.100.83/XSCJ/Tea_KCCJLR_add_temp.aspx*"
+        "http://172.18.100.83/XSCJ/Tea_KCCJLR_add_temp.aspx*",
+        "http://218.15.245.162:9086/XSCJ/TEA_BKCJ_ADD.aspx",
+        "http://172.18.100.81/XSCJ/XSCJ/TEA_BKCJ_ADD.aspx",
+        "http://172.18.100.82/XSCJ/XSCJ/TEA_BKCJ_ADD.aspx",
+        "http://172.18.100.83/XSCJ/XSCJ/TEA_BKCJ_ADD.aspx"
       ],
       "js": [ "js/content-script.js" ],
       "css": ["css/inject.css"],
+      "all_frames": true,
       "run_at": "document_idle"
     }
   ],
