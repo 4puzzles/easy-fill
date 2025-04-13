@@ -1,5 +1,5 @@
 class ResitHandler implements Handler{
-  getTargetWindow() {
+  getTargetWindow(): Window {
     if (window && window.frames[0]) {
       return window.frames[0];
     }
@@ -7,21 +7,19 @@ class ResitHandler implements Handler{
     throw Error('Failed to get target window');
   }
 
-  afterFill(n: number) {
+  inputHook(n: number, input: HTMLInputElement) {
     const targetWindow = this.getTargetWindow();
-    const curInput = targetWindow.document.getElementById(String(n)) as HTMLInputElement;
 
     // getselblur is a predefined function
     // when the user inputs a score, the function will be called
     // and the resit score will be calculated
     // here we just simulate the same situation
-    targetWindow.getselblur(n, 1, curInput);
+    targetWindow.getselblur(n, 1, input);
   }
 
-  afterSelect(n: number) {
+  selectHook(i: number, select: HTMLSelectElement) {
     const targetWindow = this.getTargetWindow();
-    const curSelect = targetWindow.document.getElementById('sel_QMTSQK' + n) as HTMLSelectElement;
-    targetWindow.settsqk(n, 'QM', curSelect);
+    targetWindow.settsqk(i, 'QM', select);
   }
 
   fillWith(sheetJSON: SheetJSON) {
@@ -59,26 +57,27 @@ class ResitHandler implements Handler{
         const note = sheetJSON[key]['备注']?.trim();
 
         let affected = false;
-        const select = curtr.querySelector('#sel_QMTSQK' + (i + 1)) as  HTMLInputElement;
+        const select = curtr.querySelector('#sel_QMTSQK' + (i + 1)) as HTMLSelectElement;
         const options = select.querySelectorAll('option');
         const oldOption = Array.from(options).find(option => option.value === select.value);
         if (!note) {
           if (oldOption!.textContent!.trim()) {
             select.value = '';
-            this.afterSelect(i + 1);
+            this.selectHook(i + 1, select);
             affected = true;
           }
 
           if (!isNaN(score)) {
-            (curtr.querySelector('input[name="CHKQMCJ' + (i + 1) + '"]') as HTMLInputElement).value = String(score);
-            this.afterFill(i + 1);
+            const input = curtr.querySelector('input[name="CHKQMCJ' + (i + 1) + '"]') as HTMLInputElement;
+            input.value = String(score);
+            this.inputHook(i + 1, input);
             affected = true;
           }
         } else {
           const newOption = Array.from(options).find(option => option.textContent === note);
           if (newOption && newOption != oldOption) {
             select.value = newOption.value;
-            this.afterSelect(i + 1);
+            this.selectHook(i + 1, select);
             affected = true;
           }
         }

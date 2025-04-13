@@ -63,7 +63,6 @@ const parseExcelFile = (file: File): Promise<SheetJSON> => {
         });
 
         const sheetJSON: SheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-        //console.log(sheetJSON);
         resolve(sheetJSON);
       } catch (e) {
         console.error(e);

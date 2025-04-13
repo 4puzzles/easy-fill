@@ -7,15 +7,14 @@ class FinalHandler implements Handler {
     throw Error('Failed to get target window');
   }
 
-  afterFill(idPrefix: string, n: number): void {
+  inputHook(str1: string, str2: '1'|'9',  input: HTMLInputElement): void {
     const targetWindow = this.getTargetWindow();
-    const curInput = targetWindow.document.getElementById(idPrefix + n) as HTMLInputElement;
 
     // getBFselblur is a predefined function
     // when the user inputs a score, the function will be called
     // and the final score will be calculated
     // here we just simulate the same situation
-    targetWindow.getBFselblur(String(n), '1', '1', curInput);
+    targetWindow.getBFselblur(str1, str2, '1', input);
   }
 
   fillWith(sheetJSON: SheetJSON): number {
@@ -60,14 +59,16 @@ class FinalHandler implements Handler {
 
         let affected = false;
         if (!isNaN(score1)) {
-          (curtr.querySelector('#CHKPSCJ' + i) as HTMLInputElement).value = String(score1);
-          this.afterFill('CHKPSCJ', i);
+          const input = curtr.querySelector('#CHKPSCJ' + i) as HTMLInputElement;
+          input.value = String(score1);
+          this.inputHook(String(i), '9', input);
           affected = true;
         }
 
         if (!isNaN(score2)) {
-          (curtr.querySelector('#CHKQMCJ' + i) as HTMLInputElement).value = String(score2);
-          this.afterFill('CHKQMCJ', i);
+          const input = curtr.querySelector('#CHKQMCJ' + i) as HTMLInputElement;
+          input.value = String(score2);
+          this.inputHook(String(i), '1', input);
           affected = true;
         }
 
