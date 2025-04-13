@@ -1,16 +1,16 @@
-import { createApp } from 'vue';
+import { createApp } from 'vue'
 
 // import ant design
-import 'ant-design-vue/dist/reset.css';
+import 'ant-design-vue/dist/reset.css'
 
-import App from './App.vue';
-
-
-const el = document.createElement('div');
-el.id = 'easy-fill-ext';
-document.body.appendChild(el);
+import App from './App.vue'
 
 
-const app = createApp(App);
+const el = document.createElement('div')
+el.id = 'easy-fill-ext'
+document.body.appendChild(el)
 
-app.mount('#easy-fill-ext');
+
+const app = createApp(App)
+
+app.mount('#easy-fill-ext')

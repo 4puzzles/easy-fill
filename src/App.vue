@@ -10,93 +10,93 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue';
-import { message } from 'ant-design-vue';
-import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue';
-import * as XLSX from 'xlsx';
+import { ref, useTemplateRef } from 'vue'
+import { message } from 'ant-design-vue'
+import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue'
+import * as XLSX from 'xlsx'
 
-import FinalHandler from './handlers/FinalHandler';
-import ResitHandler from './handlers/ResitHandler';
+import FinalHandler from './handlers/FinalHandler'
+import ResitHandler from './handlers/ResitHandler'
 
-let handler: Handler | null = null;
-const pos = {};
+let handler: Handler | null = null
+const pos = {}
 
 // final grades
 if(location.pathname.includes('/XSCJ/Tea_KCCJLR_add_temp')) {
   (pos as AppPos).position = 'absolute';
   (pos as AppPos).top = '40px';
   (pos as AppPos).right = '300px';
-  handler = new FinalHandler;
+  handler = new FinalHandler
 } else if(location.pathname.includes('/XSCJ/TEA_BKCJ_ADD')) {
   (pos as AppPos).position = 'absolute';
   (pos as AppPos).top = '40px';
   (pos as AppPos).right = '300px';
-  handler = new ResitHandler;
+  handler = new ResitHandler
 } else {
-  (pos as AppHide).display = 'none';
+  (pos as AppHide).display = 'none'
 }
 
 
 
-const state = ref('ready');
-const input = useTemplateRef('fileInput');
+const state = ref('ready')
+const input = useTemplateRef('fileInput')
 
 const checkFile = (fileUploadInput: HTMLInputElement): Promise<File> => {
   return new Promise((resolve, reject) => {
     if (fileUploadInput.value === '') {
-      reject(new Error('No file is selected'));
-      return;
+      reject(new Error('No file is selected'))
+      return
     }
-    resolve(fileUploadInput.files![0]);
-  });
+    resolve(fileUploadInput.files![0])
+  })
 }
 
 const parseExcelFile = (file: File): Promise<SheetJSON> => {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = (event) => {
-      const rawData = event.target!.result;
+      const rawData = event.target!.result
 
       try {
         const wb = XLSX.read(rawData, {
           type: "array"
-        });
+        })
 
-        const sheetJSON: SheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-        resolve(sheetJSON);
+        const sheetJSON: SheetJSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
+        resolve(sheetJSON)
       } catch (e) {
-        console.error(e);
-        reject(new Error('Fail to parse the file'));
+        console.error(e)
+        reject(new Error('Fail to parse the file'))
       }
     };
 
-    reader.readAsArrayBuffer(file);
+    reader.readAsArrayBuffer(file)
   });
 }
 
 const handleChange = (event: Event) => {
-  state.value = 'loading';
+  state.value = 'loading'
   checkFile(event.target as HTMLInputElement)
     .then(parseExcelFile)
     .then((sheetJSON) => {
       return handler!.fillWith(sheetJSON)
     })
     .then(n => {
-      state.value = 'ready';
-      const msg = n + (n === 1 ? ' row affected' : ' rows affected');
-      console.log('easy-fill: ' + msg);
-      message.success(msg);
+      state.value = 'ready'
+      const msg = n + (n === 1 ? ' row affected' : ' rows affected')
+      console.log('easy-fill: ' + msg)
+      message.success(msg)
     })
     .catch(err => {
-      state.value = 'error';
-      console.error(err);
-      message.error(err.message);
+      state.value = 'error'
+      console.error(err)
+      message.error(err.message)
     })
     .finally(() => {
       // reset file upload input
       // so that the change event can be retriggered if users upload the same file
-      input.value!.value = '';
-    });
+      input.value!.value = ''
+    })
 };
 
 </script>
