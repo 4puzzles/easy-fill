@@ -1,4 +1,4 @@
-class ResitHandler {
+class ResitHandler implements Handler{
   getTargetWindow() {
     if (window && window.frames[0]) {
       return window.frames[0];
@@ -7,9 +7,9 @@ class ResitHandler {
     throw Error('Failed to get target window');
   }
 
-  afterFill(n) {
+  afterFill(n: number) {
     const targetWindow = this.getTargetWindow();
-    const curInput = targetWindow.document.getElementById(n);
+    const curInput = targetWindow.document.getElementById(String(n)) as HTMLInputElement;
 
     // getselblur is a predefined function
     // when the user inputs a score, the function will be called
@@ -18,13 +18,13 @@ class ResitHandler {
     targetWindow.getselblur(n, 1, curInput);
   }
 
-  afterSelect(n) {
+  afterSelect(n: number) {
     const targetWindow = this.getTargetWindow();
-    const curSelect = targetWindow.document.getElementById('sel_QMTSQK' + n);
+    const curSelect = targetWindow.document.getElementById('sel_QMTSQK' + n) as HTMLSelectElement;
     targetWindow.settsqk(n, 'QM', curSelect);
   }
 
-  fillWith(sheetJSON) {
+  fillWith(sheetJSON: SheetJSON) {
     // get target document object
     const doc = this.getTargetWindow().document;
 
@@ -41,8 +41,8 @@ class ResitHandler {
     for (let i = 0; i < trs.length; i++) {
       const curtr = trs[i];
 
-      const studentID = curtr.querySelectorAll('td')[1].textContent.trim();
-      const studentName = curtr.querySelectorAll('td')[2].textContent.trim();
+      const studentID = curtr.querySelectorAll('td')[1].textContent!.trim();
+      const studentName = curtr.querySelectorAll('td')[2].textContent!.trim();
 
       for (const key in sheetJSON) {
         if (!sheetJSON[key]["学号"] || !sheetJSON[key]["姓名"])
@@ -59,18 +59,18 @@ class ResitHandler {
         const note = sheetJSON[key]['备注']?.trim();
 
         let affected = false;
-        const select = curtr.querySelector('#sel_QMTSQK' + (i + 1));
+        const select = curtr.querySelector('#sel_QMTSQK' + (i + 1)) as  HTMLInputElement;
         const options = select.querySelectorAll('option');
         const oldOption = Array.from(options).find(option => option.value === select.value);
         if (!note) {
-          if (oldOption.textContent.trim()) {
+          if (oldOption!.textContent!.trim()) {
             select.value = '';
             this.afterSelect(i + 1);
             affected = true;
           }
 
           if (!isNaN(score)) {
-            curtr.querySelector('input[name="CHKQMCJ' + (i + 1) + '"]').value = score;
+            (curtr.querySelector('input[name="CHKQMCJ' + (i + 1) + '"]') as HTMLInputElement).value = String(score);
             this.afterFill(i + 1);
             affected = true;
           }

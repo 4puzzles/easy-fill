@@ -1,16 +1,15 @@
-class FinalHandler {
-  getTargetWindow() {
+class FinalHandler implements Handler {
+  getTargetWindow(): Window {
     if (window && window.frames[0]) {
-      console.log(window.frames[0]);
       return window.frames[0];
     }
 
     throw Error('Failed to get target window');
   }
 
-  afterFill(idPrefix, n) {
+  afterFill(idPrefix: string, n: number): void {
     const targetWindow = this.getTargetWindow();
-    const curInput = targetWindow.document.getElementById(idPrefix + n);
+    const curInput = targetWindow.document.getElementById(idPrefix + n) as HTMLInputElement;
 
     // getBFselblur is a predefined function
     // when the user inputs a score, the function will be called
@@ -19,7 +18,7 @@ class FinalHandler {
     targetWindow.getBFselblur(String(n), '1', '1', curInput);
   }
 
-  fillWith(sheetJSON) {
+  fillWith(sheetJSON: SheetJSON): number {
     // get target document object
     const doc = this.getTargetWindow().document;
 
@@ -42,8 +41,8 @@ class FinalHandler {
         break;
       }
 
-      const studentID = curtr.querySelectorAll('td')[1].textContent.trim();
-      const studentName = curtr.querySelectorAll('td')[2].textContent.trim();
+      const studentID = curtr.querySelectorAll('td')[1].textContent!.trim();
+      const studentName = curtr.querySelectorAll('td')[2].textContent!.trim();
 
       for (const key in sheetJSON) {
         if (!sheetJSON[key]["学号"] || !sheetJSON[key]["姓名"])
@@ -61,13 +60,13 @@ class FinalHandler {
 
         let affected = false;
         if (!isNaN(score1)) {
-          curtr.querySelector('#CHKPSCJ' + i).value = score1;
+          (curtr.querySelector('#CHKPSCJ' + i) as HTMLInputElement).value = String(score1);
           this.afterFill('CHKPSCJ', i);
           affected = true;
         }
 
         if (!isNaN(score2)) {
-          curtr.querySelector('#CHKQMCJ' + i).value = score2;
+          (curtr.querySelector('#CHKQMCJ' + i) as HTMLInputElement).value = String(score2);
           this.afterFill('CHKQMCJ', i);
           affected = true;
         }

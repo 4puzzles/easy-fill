@@ -6,7 +6,7 @@ const defaultScriptPath = 'js/inject.js';
   // log
   console.info("%c[Easy Fill]: path '" + location.pathname + "' detected", 'color: green;');
 
-	let script = document.createElement('script');
+	const script = document.createElement('script');
 	script.setAttribute('type', 'module');
 
   // cannot use relative path directly like script.src = 'inject.bundle.js'
@@ -23,7 +23,7 @@ const defaultScriptPath = 'js/inject.js';
 
 	script.onload = function() {
 		// remove after execution
-		this.parentNode.removeChild(this);
+		script.parentNode?.removeChild(script);
 	};
 
 	document.head.appendChild(script);

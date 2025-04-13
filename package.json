@@ -15,8 +15,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
     "lint": "eslint . --fix"
   },
   "dependencies": {
@@ -25,13 +27,20 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/chrome": "^0.0.313",
+    "@types/node": "^22.14.0",
     "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/eslint-config-typescript": "^14.5.0",
+    "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.21.0",
     "eslint-plugin-vue": "~10.0.0",
-    "globals": "^16.0.0",
+    "jiti": "^2.4.2",
+    "npm-run-all2": "^7.0.2",
+    "typescript": "^5.8.3",
     "vite": "^6.2.1",
-    "vite-plugin-vue-devtools": "^7.7.2"
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue-tsc": "^2.2.8"
   },
   "private": true,
   "type": "module"
