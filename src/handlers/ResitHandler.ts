@@ -7,7 +7,7 @@ class ResitHandler implements Handler{
     throw Error('Failed to get target window')
   }
 
-  inputHook(n: number, input: HTMLInputElement) {
+  inputHook(n: number, input: HTMLInputElement): void {
     const targetWindow = this.getTargetWindow()
 
     // getselblur is a predefined function
@@ -17,12 +17,12 @@ class ResitHandler implements Handler{
     targetWindow.getselblur(n, 1, input)
   }
 
-  selectHook(i: number, select: HTMLSelectElement) {
+  selectHook(i: number, select: HTMLSelectElement): void {
     const targetWindow = this.getTargetWindow()
     targetWindow.settsqk(i, 'QM', select)
   }
 
-  fillWith(sheetJSON: SheetJSON) {
+  fillWith(sheetJSON: SheetJSON): number {
     // get target document object
     const doc = this.getTargetWindow().document
 

@@ -11,7 +11,7 @@ interface Window {
 }
 
 interface Handler {
-  fillWith(sheetJSON: SheetJSON)
+  fillWith(sheetJSON: SheetJSON): number
 }
 
 interface SheetJSON {
