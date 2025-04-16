@@ -14,16 +14,6 @@ interface Handler {
   fillWith(sheetJSON: SheetJSON)
 }
 
-interface AppPos {
-  position: string,
-  top: string,
-  right: string
-}
-
-interface AppHide {
-  display: 'none'
-}
-
 interface SheetJSON {
   [index: number]: {
     [key: string]: string

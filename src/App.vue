@@ -1,8 +1,8 @@
 <template>
-  <div :style="pos">
-    <SmileOutlined class="icon" v-show="state === 'ready'" :style="{ color: '#08c' }" />
-    <LoadingOutlined class="icon" v-show="state === 'loading'" :style="{ color: '#08c' }" />
-    <FrownOutlined class="icon" v-show="state === 'error'" :style="{ color: '#ff4d4f' }" />
+  <div :class="[appStyle]">
+    <SmileOutlined class="icon" v-show="state === 'ready'" style="color: #08c;" />
+    <LoadingOutlined class="icon" v-show="state === 'loading'" style="color: #08c;" />
+    <FrownOutlined class="icon" v-show="state === 'error'" style="color: #ff4d4f;" />
     <input ref="fileInput" class="file-upload-input" type="file"
       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
       @change="handleChange($event)">
@@ -18,24 +18,16 @@ import * as XLSX from 'xlsx'
 import FinalHandler from './handlers/FinalHandler'
 import ResitHandler from './handlers/ResitHandler'
 
-let handler: Handler | null = null
-const pos = {}
+let handler: Handler
+const appStyle = ref('app-hide')
 
-// final grades
 if(location.pathname.includes('/XSCJ/Tea_KCCJLR_add_temp')) {
-  (pos as AppPos).position = 'absolute';
-  (pos as AppPos).top = '40px';
-  (pos as AppPos).right = '300px';
+  appStyle.value = 'app-on-final-page'
   handler = new FinalHandler
 } else if(location.pathname.includes('/XSCJ/TEA_BKCJ_ADD')) {
-  (pos as AppPos).position = 'absolute';
-  (pos as AppPos).top = '40px';
-  (pos as AppPos).right = '300px';
+  appStyle.value = 'app-on-resit-page'
   handler = new ResitHandler
-} else {
-  (pos as AppHide).display = 'none'
 }
-
 
 
 const state = ref('ready')
@@ -102,6 +94,34 @@ const handleChange = (event: Event) => {
 </script>
 
 <style scoped>
+.app-on-final-page {
+  position: absolute;
+  top: 40px;
+  right: 300px;
+}
+
+.app-on-resit-page {
+  position: absolute;
+  top: 40px;
+  right: 300px;
+}
+
+@media (max-width: 1500px) {
+  .app-on-resit-page {
+    right: 100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .app-on-resit-page {
+    right: 50px;
+  }
+}
+
+.app-hide {
+  display: none;
+}
+
 .icon {
   font-size: 20px;
 }
