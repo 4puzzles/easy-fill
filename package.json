@@ -22,6 +22,7 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@imengyu/vue3-context-menu": "^1.5.1",
     "ant-design-vue": "^4.2.6",
     "vue": "^3.5.13",
     "xlsx": "^0.18.5"

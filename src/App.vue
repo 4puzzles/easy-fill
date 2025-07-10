@@ -1,8 +1,8 @@
 <template>
-  <div :class="[appStyle]">
-    <SmileOutlined class="icon" v-show="state === 'ready'" style="color: #08c;" />
-    <LoadingOutlined class="icon" v-show="state === 'loading'" style="color: #08c;" />
-    <FrownOutlined class="icon" v-show="state === 'error'" style="color: #ff4d4f;" />
+  <div :class="[appStyle]" @contextmenu="onContextMenu">
+    <SmileOutlined class="icon" v-show="state === 'ready'" :style="{ color: '#08c' }" />
+    <LoadingOutlined class="icon" v-show="state === 'loading'" :style="{ color: '#08c' }" />
+    <FrownOutlined class="icon" v-show="state === 'error'" :style="{ color: '#ff4d4f' }" />
     <input ref="fileInput" class="file-upload-input" type="file"
       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
       @change="handleChange($event)">
@@ -11,24 +11,21 @@
 
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
+
 import { message } from 'ant-design-vue'
 import { SmileOutlined, LoadingOutlined, FrownOutlined } from '@ant-design/icons-vue'
 import * as XLSX from 'xlsx'
+import ContextMenu from '@imengyu/vue3-context-menu'
 
 import FinalHandler from './handlers/FinalHandler'
-import ResitHandler from './handlers/ResitHandler'
 
-let handler: Handler
+let handler: Handler | null = null
 const appStyle = ref('app-hide')
 
-if(location.pathname.includes('/XSCJ/Tea_KCCJLR_add_temp')) {
+if(location.pathname.includes('/wjstgdfw/cjlr.lrxscj.fkcaskbjlrcj_input.jsp')) {
   appStyle.value = 'app-on-final-page'
   handler = new FinalHandler
-} else if(location.pathname.includes('/XSCJ/TEA_BKCJ_ADD')) {
-  appStyle.value = 'app-on-resit-page'
-  handler = new ResitHandler
 }
-
 
 const state = ref('ready')
 const input = useTemplateRef('fileInput')
@@ -67,11 +64,16 @@ const parseExcelFile = (file: File): Promise<SheetJSON> => {
 }
 
 const handleChange = (event: Event) => {
+  if (!handler) {
+    console.error('Unexpected page')
+    return
+  }
+
   state.value = 'loading'
   checkFile(event.target as HTMLInputElement)
     .then(parseExcelFile)
     .then((sheetJSON) => {
-      return handler!.fillWith(sheetJSON)
+      return handler.fillWith(sheetJSON)
     })
     .then(n => {
       state.value = 'ready'
@@ -91,38 +93,37 @@ const handleChange = (event: Event) => {
     })
 };
 
+const onContextMenu = (e: MouseEvent) => {
+  //prevent the browser's default menu
+  e.preventDefault();
+
+  if(!handler) {
+    return
+  }
+
+  ContextMenu.showContextMenu({
+    x: e.x,
+    y: e.y,
+    items: handler.getContextMenuItems()
+  });
+}
+
 </script>
 
 <style scoped>
 .app-on-final-page {
   position: absolute;
-  top: 40px;
+  top: 60px;
   right: 300px;
-}
-
-.app-on-resit-page {
-  position: absolute;
-  top: 40px;
-  right: 300px;
-}
-
-@media (max-width: 1500px) {
-  .app-on-resit-page {
-    right: 100px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .app-on-resit-page {
-    right: 50px;
-  }
+  width: 20px;
+  height: 20px;
 }
 
 .app-hide {
   display: none;
 }
 
-.icon {
+.icon :deep(svg) {
   font-size: 20px;
 }
 
@@ -140,5 +141,11 @@ const handleChange = (event: Event) => {
   opacity: 0;
 
   cursor: pointer;
+}
+</style>
+<style>
+/* vue3-context-menu */
+.mx-context-menu-item .label {
+  font-size: 12px;
 }
 </style>
