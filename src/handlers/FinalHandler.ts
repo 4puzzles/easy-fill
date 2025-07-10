@@ -243,9 +243,10 @@ class FinalHandler implements Handler {
     const items: Array<MenuItem> = [
       {
         label: "清除高亮",
+        svgIcon: '#icon-highlight-off',
         onClick: () => {
           this.clearHighlight()
-        }
+        },
       },
     ]
 
@@ -256,9 +257,10 @@ class FinalHandler implements Handler {
     } else if(this.rowStates.length !== 0) {
       items.push({
         label: "撤销",
+        svgIcon: '#icon-undo',
         onClick: () => {
           this.undo()
-        }
+        },
       })
     }
     return items
